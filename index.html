@@ -6,7 +6,6 @@
     <title>Happy Birthday!</title>
     <style>
         :root {
-            /* Purple Palette */
             --bg-color: #0d0221;
             --card-bg: rgba(42, 10, 74, 0.6);
             --card-border: rgba(166, 77, 255, 0.8);
@@ -20,15 +19,14 @@
             padding: 0;
             height: 100vh;
             background-color: var(--bg-color);
-            overflow: hidden; /* Keeps the scattered images contained */
+            overflow: hidden; 
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Courier New', Courier, monospace; /* Typewriter/hacker aesthetic */
+            font-family: 'Courier New', Courier, monospace; 
             perspective: 1200px;
         }
 
-        /* Container for the dumped text */
         #text-dump {
             position: absolute;
             top: 0;
@@ -36,13 +34,13 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none; /* Lets you click the card through the text */
+            pointer-events: none; 
             overflow: hidden;
         }
 
         .bg-text {
             position: absolute;
-            color: rgba(166, 77, 255, 0.3); /* Faded neon purple */
+            color: rgba(166, 77, 255, 0.3); 
             font-size: 1.5rem;
             font-weight: bold;
             white-space: nowrap;
@@ -52,7 +50,6 @@
             opacity: 0.8;
         }
 
-        /* A dark purple overlay to ensure the card is always readable */
         .overlay {
             position: absolute;
             top: 0;
@@ -64,7 +61,76 @@
             pointer-events: none;
         }
 
-        /* --- Custom Music Player --- */
+        #password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 2, 33, 0.95);
+            z-index: 200;
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .password-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid var(--neon-purple);
+            text-align: center;
+            box-shadow: 0 0 30px var(--neon-purple);
+            color: white;
+        }
+
+        .password-box h2 {
+            margin-top: 0;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink-glow);
+        }
+
+        .password-box .hint {
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .password-box input {
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--neon-purple);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            outline: none;
+            width: 80%;
+            text-align: center;
+        }
+
+        .password-box button {
+            padding: 10px 25px;
+            margin-top: 20px;
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            text-shadow: 0 0 5px var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .password-box button:hover {
+            background: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 20px var(--neon-pink-glow);
+        }
+
         .music-player {
             position: absolute;
             bottom: 30px;
@@ -110,12 +176,11 @@
             transform: scale(1.1);
         }
 
-        /* The Card Container - Increased Size */
         .card-container {
             position: relative;
             width: 90%;
-            max-width: 500px; /* Made the card wider */
-            height: 650px;    /* Made the card taller */
+            max-width: 500px; 
+            height: 650px;    
             z-index: 10;
             transform-style: preserve-3d;
             transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -126,7 +191,6 @@
             transform: rotateY(180deg);
         }
 
-        /* Shared Card Face Styles (Glassmorphism) */
         .card-face {
             position: absolute;
             width: 100%;
@@ -134,7 +198,7 @@
             backface-visibility: hidden;
             border-radius: 24px;
             background: var(--card-bg);
-            backdrop-filter: blur(12px); /* The frosted glass effect */
+            backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px);
             border: 2px solid var(--card-border);
             box-shadow: 
@@ -152,10 +216,9 @@
             text-align: center;
         }
 
-        /* Front of the Card */
         .card-front h1 {
             color: #fff;
-            font-size: 3.5rem; /* Increased font size to match larger card */
+            font-size: 3.5rem; 
             text-transform: uppercase;
             letter-spacing: 4px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
@@ -169,14 +232,12 @@
             animation: pulse 2s infinite;
         }
 
-        /* Back of the Card (Where your text goes) */
         .card-back {
             transform: rotateY(180deg);
             justify-content: flex-start;
-            overflow-y: auto; /* In case you write a long message */
+            overflow-y: auto; 
         }
 
-        /* NEON PINK TEXT STYLE */
         .neon-text {
             color: var(--neon-pink);
             text-shadow: 
@@ -184,24 +245,16 @@
                 0 0 10px var(--neon-pink),
                 0 0 20px var(--neon-pink-glow),
                 0 0 40px var(--neon-pink-glow);
-            font-size: 1.3rem; /* Made text slightly larger */
+            font-size: 1.3rem; 
             line-height: 1.6;
             font-weight: bold;
             width: 100%;
             text-align: left;
         }
 
-        /* Scrollbar styling for the card back */
-        .card-back::-webkit-scrollbar {
-            width: 6px;
-        }
-        .card-back::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .card-back::-webkit-scrollbar-thumb {
-            background: rgba(255, 20, 147, 0.5);
-            border-radius: 10px;
-        }
+        .card-back::-webkit-scrollbar { width: 6px; }
+        .card-back::-webkit-scrollbar-track { background: transparent; }
+        .card-back::-webkit-scrollbar-thumb { background: rgba(255, 20, 147, 0.5); border-radius: 10px; }
 
         @keyframes pulse {
             0%, 100% { opacity: 0.5; }
@@ -212,34 +265,37 @@
 </head>
 <body>
 
-    <!-- Background for the heaped text -->
     <div id="text-dump"></div>
-    <!-- Dark gradient overlay to make text readable -->
     <div class="overlay"></div>
 
-    <!-- Visible Music Player UI at the border -->
+    <div id="password-overlay">
+        <div class="password-box">
+            <h2>Access Required</h2>
+            <p class="hint">Hint: What do you call me recently?</p>
+            <input type="text" id="password-input" placeholder="Enter password...">
+            <br>
+            <button id="password-submit">Unlock</button>
+            <p id="password-error" style="color: #ff4d4d; display: none; margin-top: 15px; font-weight: bold; text-shadow: none;">Incorrect! Try again.</p>
+        </div>
+    </div>
+
     <div class="music-player">
-        <button class="play-btn" id="play-pause-btn">⏸</button>
+        <button class="play-btn" id="play-pause-btn">▶</button>
         <div class="track-info">
             <span>🎵</span>
             <span>Lana Del Rey - Young and Beautiful</span>
         </div>
     </div>
 
-    <!-- Hidden YouTube iframe containing Lana Del Rey -->
-    <!-- Changed autoplay=0 to autoplay=1 so it tries to start instantly -->
-    <iframe id="bg-music" src="https://www.youtube.com/embed/o_1aF54DO60?enablejsapi=1&autoplay=1" allow="autoplay; encrypted-media" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></iframe>
+    <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
 
-    <!-- The 3D Flipping Card -->
     <div class="card-container" id="birthday-card">
         
-        <!-- FRONT -->
         <div class="card-face card-front">
             <h1>For You</h1>
             <div class="click-hint">[ Tap to open ]</div>
         </div>
 
-        <!-- BACK (YOUR MESSAGE GOES HERE) -->
         <div class="card-face card-back">
             <div class="neon-text" id="card-body">
                 <p>HEYYY TWIG!!! MORE BETTER MUTHKI ... aishh idk if your gonna be awake when your seeing this but yeah it did take alot of time to make this so hopefully you like it....</p>
@@ -254,7 +310,6 @@
     </div>
 
     <script>
-        // --- STEP 1: PASTE YOUR BACKGROUND TEXTS HERE ---
         const backgroundTexts = [
             "I can glaze at you HAHAHAHA",
             "Mummaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -267,7 +322,6 @@
             "Long Lost Brother"
         ];
 
-        // --- Logic to scatter the text chaotically ---
         const dumpContainer = document.getElementById('text-dump');
 
         function scatterText() {
@@ -295,45 +349,71 @@
             });
         }
 
-        // --- Music Player & Card Logic ---
         const card = document.getElementById('birthday-card');
-        const iframe = document.getElementById('bg-music');
+        const audioPlayer = document.getElementById('bg-music'); // Target the new audio tag
         const playPauseBtn = document.getElementById('play-pause-btn');
+        const pwdOverlay = document.getElementById('password-overlay');
+        const pwdInput = document.getElementById('password-input');
+        const pwdSubmit = document.getElementById('password-submit');
+        const pwdError = document.getElementById('password-error');
         
-        // Assume music is playing because we set autoplay=1
-        let isMusicPlaying = true; 
+        let isUnlocked = false;
+        let isMusicPlaying = false; 
 
-        // Function to toggle music
+        card.addEventListener('click', () => {
+            if (!isUnlocked) {
+                pwdOverlay.style.display = 'flex';
+                pwdInput.focus();
+            } else {
+                card.classList.toggle('is-flipped');
+            }
+        });
+
+        pwdSubmit.addEventListener('click', () => {
+            const enteredPassword = pwdInput.value.toLowerCase().trim();
+            
+            if (enteredPassword === 'bolimaga') {
+                isUnlocked = true;
+                pwdOverlay.style.display = 'none';
+                card.classList.add('is-flipped'); 
+                
+                // Play the local MP3 file!
+                audioPlayer.play().then(() => {
+                    isMusicPlaying = true;
+                    playPauseBtn.innerText = '⏸';
+                }).catch(err => {
+                    console.log("Audio play failed:", err);
+                });
+                
+            } else {
+                pwdError.style.display = 'block';
+            }
+        });
+
+        pwdInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                pwdSubmit.click();
+            }
+        });
+
         function toggleMusic() {
+            if (!isUnlocked) return; 
+
             if (isMusicPlaying) {
-                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                audioPlayer.pause();
                 playPauseBtn.innerText = '▶';
             } else {
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                playPauseBtn.innerText = '⏸'; // Pause icon
+                audioPlayer.play();
+                playPauseBtn.innerText = '⏸';
             }
             isMusicPlaying = !isMusicPlaying;
         }
 
-        // Play/Pause button click event
         playPauseBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents the card from flipping if you click the player
+            e.stopPropagation(); 
             toggleMusic();
         });
 
-        // Flip card and safety net for music
-        card.addEventListener('click', () => {
-            card.classList.toggle('is-flipped');
-            
-            // If her browser blocked the instant autoplay, this click will force it to start
-            if (iframe.contentWindow) {
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                isMusicPlaying = true;
-                playPauseBtn.innerText = '⏸';
-            }
-        });
-
-        // Initialize the chaotic background
         window.onload = scatterText;
 
     </script>
