@@ -271,7 +271,7 @@
     <div id="password-overlay">
         <div class="password-box">
             <h2>Access Required</h2>
-            <p class="hint">Hint: What do you call me recently?Starts with bo- and no spaces</p>
+            <p class="hint">Hint: What do you call me recently?Names with space are smtg to be afraid of</p>
             <input type="text" id="password-input" placeholder="Enter password...">
             <br>
             <button id="password-submit">Unlock</button>
@@ -284,7 +284,7 @@
         <div class="track-info">
             <span>🎵</span>
             <span>Lana Del Rey - Young and Beautiful</span>
-        </div>  
+        </div>
     </div>
 
     <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
@@ -350,7 +350,7 @@
         }
 
         const card = document.getElementById('birthday-card');
-        const audioPlayer = document.getElementById('bg-music'); // Target the new audio tag
+        const audioPlayer = document.getElementById('bg-music'); 
         const playPauseBtn = document.getElementById('play-pause-btn');
         const pwdOverlay = document.getElementById('password-overlay');
         const pwdInput = document.getElementById('password-input');
@@ -364,6 +364,13 @@
             if (!isUnlocked) {
                 pwdOverlay.style.display = 'flex';
                 pwdInput.focus();
+                
+                if (!isMusicPlaying) {
+                    audioPlayer.play().then(() => {
+                        isMusicPlaying = true;
+                        playPauseBtn.innerText = '⏸';
+                    }).catch(err => {});
+                }
             } else {
                 card.classList.toggle('is-flipped');
             }
@@ -376,15 +383,6 @@
                 isUnlocked = true;
                 pwdOverlay.style.display = 'none';
                 card.classList.add('is-flipped'); 
-                
-                // Play the local MP3 file!
-                audioPlayer.play().then(() => {
-                    isMusicPlaying = true;
-                    playPauseBtn.innerText = '⏸';
-                }).catch(err => {
-                    console.log("Audio play failed:", err);
-                });
-                
             } else {
                 pwdError.style.display = 'block';
             }
