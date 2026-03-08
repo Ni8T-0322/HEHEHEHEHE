@@ -61,7 +61,7 @@
             pointer-events: none;
         }
 
-        #password-overlay {
+        #password-overlay, #early-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -73,6 +73,10 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+        }
+
+        #early-overlay {
+            z-index: 300;
         }
 
         .password-box {
@@ -268,10 +272,19 @@
     <div id="text-dump"></div>
     <div class="overlay"></div>
 
+    <div id="early-overlay">
+        <div class="password-box">
+            <h2>Too Early! 🛑</h2>
+            <p class="hint">You can't open this yet.</p>
+            <p style="color: white; margin-bottom: 20px;">Come back on March 9 at 1:30 AM IST.</p>
+            <button id="close-early-btn">Okay 😔</button>
+        </div>
+    </div>
+
     <div id="password-overlay">
         <div class="password-box">
             <h2>Access Required</h2>
-            <p class="hint">Hint: What do you call me recently?Names with space are smtg to be afraid of</p>
+            <p class="hint">Hint: What do you call me recently?</p>
             <input type="text" id="password-input" placeholder="Enter password...">
             <br>
             <button id="password-submit">Unlock</button>
@@ -356,11 +369,25 @@
         const pwdInput = document.getElementById('password-input');
         const pwdSubmit = document.getElementById('password-submit');
         const pwdError = document.getElementById('password-error');
+        const earlyOverlay = document.getElementById('early-overlay');
+        const closeEarlyBtn = document.getElementById('close-early-btn');
         
         let isUnlocked = false;
         let isMusicPlaying = false; 
 
+        closeEarlyBtn.addEventListener('click', () => {
+            earlyOverlay.style.display = 'none';
+        });
+
         card.addEventListener('click', () => {
+            const targetTime = new Date('2026-03-09T01:30:00+05:30').getTime();
+            const now = new Date().getTime();
+
+            if (now < targetTime) {
+                earlyOverlay.style.display = 'flex';
+                return;
+            }
+
             if (!isUnlocked) {
                 pwdOverlay.style.display = 'flex';
                 pwdInput.focus();
